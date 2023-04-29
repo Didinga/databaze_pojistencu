@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href={% static 'css/style.css' %} type="text/css">
+    <link rel="stylesheet" href={% static 'css/bootstrap.min.css' %} type = "text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Databáze pojištěnců</title>
+</head>
+<body>
+	{% if messages %}
+        {% for message in messages %}
+        {% if message.detail_pojisteni == "error" %}
+        <strong><span style="color: #ff564f">Error: {{message}}</span></strong>
+        {% elif message.detail_pojisteni == "info" %}
+        <strong><span style="color: #73E460">Info: {{message}}</span></strong>
+        {% else %}
+        <strong><span style="color: #73E460">Zpáva: {{message}}</span></strong>
+        {% endif %}
+        {% endfor %}
+	{% endif %}
+
+    <div class="text-center">{{request.user.email}}</div>
+    <nav>
+        <div class="flex_box">
+            <div class="nav_item"> <img src="{% static 'databaze_pojistencu/did.png' %}" alt="pismena" id="logo"></div>
+            {% if not user.is_authenticated %}<div class="nav_item"><a href={% url "registrace" %}><h2>Registrace</h2></a></div>{% endif %}
+            {% if not user.is_authenticated %}<div class="nav_item"><a href={% url "login" %}><h2>Přihlášení</h2></a></div>{% endif %}
+			{% if user.is_admin %}<div class="nav_item"><a href={% url "novy_pojistenec" %}><h2>Registrace</h2></a></div>{% endif %}
+            <div class="nav_item"> <a href={% url "pojistenec_index" %}><h2>Pojištěnci</h2></a></div>
+            {% if user.is_authenticated %}<div class="nav_item"><a href={% url "logout" %}><h2>Odhlášení</h2></a></div>{% endif %}
+        </div>
+    </nav>
+    <div class="content">
+    {% block content %}
+        
+    {% endblock %}
+    </div>
+    <footer>
+        Databáze pojištěnců 2023
+    </footer>
+</body>
+</html>

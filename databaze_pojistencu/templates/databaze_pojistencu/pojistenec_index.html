@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table class="table">
+  <caption>Seznam pojištěnců</caption>
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Jméno a příjmení</th>
+      <th scope="col"> </th>
+      <th scope="col">Věk</th>
+      <th scope="col">Adresa</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pojistenec in pojištěnci %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td colspan="2"><a href="{% url "pojistenec_detail" pojistenec.id %}"><span>{{ pojistenec.jmeno }} {{ pojistenec.prijmeni }}</span></a></td>
+      <td><a>{{ pojistenec.vek }}</a></td>
+      <td><a>{{ pojistenec.adresa }}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

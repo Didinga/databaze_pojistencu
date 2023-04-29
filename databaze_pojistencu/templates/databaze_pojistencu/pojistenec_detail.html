@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1> Jméno: {{ pojistenec.jmeno }} <span class="glyphicon glyphicon-erase"></span></h1>
+    <h1> Příjmení: {{ pojistenec.prijmeni }} </h1></small>
+    <h3> Pojištění: {{pojistenec.pojisteni.nazev_pojisteni}} </h3>
+    
+    <hr>
+    <form method="POST">
+        {% csrf_token %}
+        {% if user.is_admin %}Detail: {% if pojisteni.tagy.all.0 %} {% for tag in pojisteni.tagy.all %} <div class="btn btn-primary">{{tag.tag_title}} </div> {% endfor %} {% else %} <span style="color: red;">Tento pojištěnec nemá platné pojištění</span> {% endif %}<br><button name="edit">Upravit údaje</button><button name="delete">Smazat pojištěnce</button>{% endif %}
+    </form>
+{% endblock %}
